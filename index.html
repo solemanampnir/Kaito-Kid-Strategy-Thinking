@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaito Kid — Seni Berpikir Cerdik</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080810;
+    --deep: #0d0d1a;
+    --card: #111120;
+    --accent: #c8a951;
+    --gold: #e8c96b;
+    --white: #f0eee8;
+    --muted: #8888aa;
+    --red: #c94040;
+    --blue: #4060c8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.18s ease;
+    opacity: 0.6;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(200,169,81,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(64,96,200,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 80% 70%, rgba(201,64,64,0.06) 0%, transparent 60%);
+  }
+
+  /* Floating cards background */
+  .card-float {
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0.04;
+    pointer-events: none;
+    animation: floatCard linear infinite;
+    font-family: serif;
+  }
+
+  @keyframes floatCard {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.04; }
+    90% { opacity: 0.04; }
+    100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s ease 0.2s both;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    animation: fadeInUp 1s ease 0.4s both;
+  }
+
+  .hero-title .line-gold { color: var(--gold); font-style: italic; }
+  .hero-title .line-dim { color: rgba(240,238,232,0.25); }
+
+  .hero-subtitle {
+    margin-top: 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    animation: fadeInUp 1s ease 0.6s both;
+  }
+
+  .hero-scroll {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeInUp 1s ease 0.8s both;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: pulse 2s ease infinite;
+  }
+
+  /* QUOTE BAND */
+  .quote-band {
+    border-top: 1px solid rgba(200,169,81,0.2);
+    border-bottom: 1px solid rgba(200,169,81,0.2);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: rgba(200,169,81,0.03);
+    overflow: hidden;
+  }
+  .quote-band blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-style: italic;
+    color: var(--gold);
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+  .quote-band cite {
+    display: block;
+    margin-top: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  /* SECTION */
+  section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,169,81,0.2);
+    max-width: 120px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* PRINCIPLES GRID */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5px;
+    background: rgba(200,169,81,0.1);
+    border: 1px solid rgba(200,169,81,0.1);
+    margin-top: 4rem;
+  }
+
+  .principle-card {
+    background: var(--card);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+    cursor: none;
+  }
+  .principle-card:hover { background: #161628; }
+  .principle-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+  .principle-card:hover::before { height: 100%; }
+
+  .principle-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .principle-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .principle-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--white);
+  }
+  .principle-desc {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #aaa8c0;
+    margin-bottom: 1.5rem;
+  }
+  .principle-apply {
+    background: rgba(200,169,81,0.06);
+    border-left: 2px solid var(--accent);
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--accent);
+  }
+  .principle-apply strong {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.4rem;
+    color: var(--gold);
+  }
+
+  /* DEEP ANALYSIS */
+  .analysis-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+  @media (max-width: 768px) { .analysis-layout { grid-template-columns: 1fr; gap: 2rem; } }
+
+  .analysis-text p {
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: #bbbad0;
+    margin-bottom: 1.5rem;
+  }
+  .analysis-text p strong { color: var(--white); font-weight: 600; }
+
+  .analysis-visual {
+    position: sticky;
+    top: 2rem;
+  }
+
+  .mind-map {
+    background: var(--card);
+    border: 1px solid rgba(200,169,81,0.15);
+    padding: 2rem;
+    border-radius: 2px;
+  }
+  .mind-map-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .mind-node {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    background: rgba(200,169,81,0.04);
+    border: 1px solid rgba(200,169,81,0.08);
+    transition: all 0.2s ease;
+  }
+  .mind-node:hover {
+    background: rgba(200,169,81,0.1);
+    border-color: rgba(200,169,81,0.3);
+    transform: translateX(4px);
+  }
+  .mind-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .mind-node-text {
+    font-size: 0.9rem;
+    color: var(--white);
+    line-height: 1.4;
+  }
+  .mind-node-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  /* FRAMEWORKS */
+  .framework-list {
+    margin-top: 3rem;
+    display: grid;
+    gap: 1rem;
+  }
+  .framework-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: border-color 0.3s;
+  }
+  .framework-item:hover { border-color: rgba(200,169,81,0.25); }
+  .framework-step {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: rgba(200,169,81,0.2);
+    line-height: 1;
+  }
+  .framework-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .framework-content p {
+    font-size: 0.95rem;
+    color: #9998b8;
+    line-height: 1.7;
+  }
+
+  /* REAL WORLD */
+  .realworld-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .rw-card {
+    padding: 2rem;
+    background: var(--card);
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease, transform 0.2s ease;
+    position: relative;
+  }
+  .rw-card:hover {
+    border-bottom-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  .rw-domain {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .rw-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .rw-desc {
+    font-size: 0.9rem;
+    color: #9090aa;
+    line-height: 1.7;
+  }
+  .rw-example {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  /* FINAL CTA */
+  .finale {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+    border-top: 1px solid rgba(200,169,81,0.15);
+  }
+  .finale::before {
+    content: '♠';
+    position: absolute;
+    font-size: 40vw;
+    color: rgba(200,169,81,0.02);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .finale-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .finale-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+  .finale-rules {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  .finale-rule {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    padding: 0.6rem 1.2rem;
+    border: 1px solid rgba(200,169,81,0.2);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(136,136,170,0.4);
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200,169,81,0.3), transparent);
+    margin: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(8,8,16,0.9), transparent);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    nav { padding: 1.2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Kaito Kid</div>
+  <ul class="nav-links">
+    <li><a href="#prinsip">Prinsip</a></li>
+    <li><a href="#analisis">Analisis</a></li>
+    <li><a href="#framework">Framework</a></li>
+    <li><a href="#dunia-nyata">Dunia Nyata</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <!-- Floating cards -->
+  <span class="card-float" style="left:5%; animation-duration:18s; animation-delay:0s;">♠</span>
+  <span class="card-float" style="left:20%; animation-duration:22s; animation-delay:4s;">♦</span>
+  <span class="card-float" style="left:40%; animation-duration:16s; animation-delay:2s;">♣</span>
+  <span class="card-float" style="left:65%; animation-duration:24s; animation-delay:6s;">♥</span>
+  <span class="card-float" style="left:80%; animation-duration:20s; animation-delay:1s;">♠</span>
+  <span class="card-float" style="left:90%; animation-duration:19s; animation-delay:8s;">♦</span>
+
+  <p class="hero-eyebrow">Analisis Strategi & Psikologi</p>
+  <h1 class="hero-title">
+    <span class="line-gold">Kaito Kid</span><br>
+    <span class="line-dim">Seni Berpikir</span><br>
+    Cerdik
+  </h1>
+  <p class="hero-subtitle">
+    Bagaimana seorang phantom thief membangun strategi yang tak tertembus — dan apa yang bisa kita pelajari dari cara berpikirnya untuk kehidupan nyata.
+  </p>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-band">
+  <blockquote>
+    "Ilusi bukan tentang menipu mata orang. Ini tentang memberikan mereka sesuatu yang lebih indah dari kenyataan."
+  </blockquote>
+  <cite>— Kaito Kuroba / Kaito Kid · Detective Conan</cite>
+</div>
+
+<!-- PRINSIP -->
+<section id="prinsip">
+  <div class="section-label reveal">01 — Prinsip Utama</div>
+  <h2 class="section-title reveal">Enam Pilar Strategi<br><em style="color:var(--gold)">Kaito Kid</em></h2>
+  <p class="reveal" style="color:var(--muted); max-width:600px; line-height:1.8; font-size:1.05rem;">
+    Setiap aksi Kaito Kid bukan sekadar sulap — melainkan sistem berpikir berlapis yang bisa dipelajari dan diterapkan.
+  </p>
+
+  <div class="principles-grid">
+
+    <div class="principle-card reveal">
+      <div class="principle-num">01 / 06</div>
+      <span class="principle-icon">🎭</span>
+      <h3 class="principle-title">Misdirection Terencana</h3>
+      <p class="principle-desc">Kaito selalu mengarahkan perhatian lawan ke tempat yang salah sebelum bergerak. Ia menciptakan "noise" visual dan emosional yang membuat lawan fokus pada hal yang tidak penting.</p>
+      <div class="principle-apply">
+        <strong>↳ APLIKASI NYATA</strong>
+        Dalam negosiasi bisnis, soroti detail kecil yang tidak krusial untuk mengalihkan perhatian dari poin utama yang ingin kamu pertahankan.
+      </div>
+    </div>
+
+    <div class="principle-card reveal">
+      <div class="principle-num">02 / 06</div>
+      <span class="principle-icon">♟️</span>
+      <h3 class="principle-title">Berpikir 5 Langkah ke Depan</h3>
+      <p class="principle-desc">Setiap trik Kaito adalah rencana berlapis — Plan A, B, C, hingga Z. Ia mengantisipasi setiap kemungkinan respons lawan, bukan hanya skenario ideal.</p>
+      <div class="principle-apply">
+        <strong>↳ APLIKASI NYATA</strong>
+        Sebelum presentasi, bayangkan 10 pertanyaan sulit yang bisa ditanya. Siapkan jawaban. Kamu akan tampak menguasai ruangan.
+      </div>
+    </div>
+
+    <div class="principle-card reveal">
+      <div class="principle-num">03 / 06</div>
+      <span class="principle-icon">🧠</span>
+      <h3 class="principle-title">Psikologi Ekspektasi</h3>
+      <p class="principle-desc">Kaito membangun ekspektasi lawan secara aktif, lalu menghancurkannya dengan elegan. Ia paham bahwa otak manusia mudah "dikunci" oleh asumsi awal.</p>
+      <div class="principle-apply">
+        <strong>↳ APLIKASI NYATA</strong>
+        Underpromise, overdeliver. Biarkan orang mengira sesuatu biasa-biasa saja, lalu kejutkan mereka dengan hasil luar biasa.
+      </div>
+    </div>
+
+    <div class="principle-card reveal">
+      <div class="principle-num">04 / 06</div>
+      <span class="principle-icon">🎨</span>
+      <h3 class="principle-title">Improvisasi Terstruktur</h3>
+      <p class="principle-desc">Walau rencananya detail, Kaito selalu siap berimprovisasi. Ia memiliki fondasi skill yang sangat kuat — sehingga bisa berinovasi di bawah tekanan tanpa panik.</p>
+      <div class="principle-apply">
+        <strong>↳ APLIKASI NYATA</strong>
+        Kuasai skill dasarmu sampai otomatis. Saat krisis datang, kamu bisa fokus pada solusi kreatif, bukan hal teknis.
+      </div>
+    </div>
+
+    <div class="principle-card reveal">
+      <div class="principle-num">05 / 06</div>
+      <span class="principle-icon">🔍</span>
+      <h3 class="principle-title">Intelligence Gathering</h3>
+      <p class="principle-desc">Kaito selalu melakukan riset mendalam tentang target, lokasi, pengamanan, dan orang-orang kunci sebelum aksi. Informasi adalah senjata utamanya.</p>
+      <div class="principle-apply">
+        <strong>↳ APLIKASI NYATA</strong>
+        Sebelum meeting penting, riset latar belakang orang yang akan kamu temui. Pengetahuan kontekstual menciptakan keunggulan asimetris.
+      </div>
+    </div>
+
+    <div class="principle-card reveal">
+      <div class="principle-num">06 / 06</div>
+      <span class="principle-icon">🌀</span>
+      <h3 class="principle-title">Persona sebagai Alat</h3>
+      <p class="principle-desc">Kaito menggunakan berbagai penyamaran bukan hanya secara fisik, tapi juga dalam cara bicara, gestur, dan pola pikir. Ia memahami bahwa identitas itu fleksibel dan bisa dikontrol.</p>
+      <div class="principle-apply">
+        <strong>↳ APLIKASI NYATA</strong>
+        Pelajari cara berkomunikasi dengan berbagai tipe kepribadian. Adaptasi gaya bicaramu untuk setiap konteks — ini bukan kepalsuan, ini kecerdasan sosial.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ANALISIS MENDALAM -->
+<section id="analisis" style="max-width:1200px; margin:0 auto;">
+  <div class="section-label reveal">02 — Deep Dive</div>
+  <h2 class="section-title reveal">Anatomi Sebuah<br><em style="color:var(--gold)">Heist yang Sempurna</em></h2>
+
+  <div class="analysis-layout">
+    <div class="analysis-text reveal">
+      <p>
+        <strong>Apa yang membuat Kaito Kid berbeda</strong> dari kriminal biasa bukanlah kecepatan tangannya — melainkan arsitektur berpikirnya. Setiap "heist" adalah sebuah sistem yang dibangun di atas pemahaman mendalam tentang psikologi manusia.
+      </p>
+      <p>
+        Kaito memahami bahwa <strong>persepsi adalah realitas</strong>. Manusia tidak melihat dunia apa adanya — mereka melihat versi yang difilter oleh asumsi, kebiasaan, dan ekspektasi. Kaito mengeksploitasi celah ini bukan dengan kejahatan, tapi dengan seni.
+      </p>
+      <p>
+        Ada konsep yang disebut <strong>"Cognitive Tunneling"</strong> — ketika seseorang terlalu fokus pada satu hal, kemampuan mereka menangkap informasi lain turun drastis. Kaito secara sadar menciptakan situasi yang memaksa lawan masuk ke tunnel ini.
+      </p>
+      <p>
+        Yang paling menarik adalah <strong>etikanya</strong>. Kaito tidak melukai siapapun. Ia bahkan sering menyelamatkan orang di tengah aksinya. Ini menunjukkan bahwa kecerdasan strategis bisa digunakan secara bertanggung jawab — untuk tujuan yang lebih besar dari sekadar menang.
+      </p>
+    </div>
+
+    <div class="analysis-visual reveal">
+      <div class="mind-map">
+        <div class="mind-map-title">SISTEM BERPIKIR KAITO KID</div>
+
+        <div class="mind-node">
+          <div class="mind-dot" style="background:#e8c96b;"></div>
+          <div>
+            <div class="mind-node-text">Observasi Mendalam</div>
+            <div class="mind-node-sub">Membaca pola, kebiasaan, dan kelemahan lawan</div>
+          </div>
+        </div>
+        <div class="mind-node">
+          <div class="mind-dot" style="background:#c8a951;"></div>
+          <div>
+            <div class="mind-node-text">Arsitektur Rencana</div>
+            <div class="mind-node-sub">Multi-layer dengan backup plan di setiap titik</div>
+          </div>
+        </div>
+        <div class="mind-node">
+          <div class="mind-dot" style="background:#4060c8;"></div>
+          <div>
+            <div class="mind-node-text">Kontrol Informasi</div>
+            <div class="mind-node-sub">Apa yang diperlihatkan vs disembunyikan</div>
+          </div>
+        </div>
+        <div class="mind-node">
+          <div class="mind-dot" style="background:#c94040;"></div>
+          <div>
+            <div class="mind-node-text">Timing yang Presisi</div>
+            <div class="mind-node-sub">Setiap gerakan pada momen yang tepat</div>
+          </div>
+        </div>
+        <div class="mind-node">
+          <div class="mind-dot" style="background:#60c880;"></div>
+          <div>
+            <div class="mind-node-text">Emotional Intelligence</div>
+            <div class="mind-node-sub">Membaca dan memanfaatkan respons emosional</div>
+          </div>
+        </div>
+        <div class="mind-node">
+          <div class="mind-dot" style="background:#c060c8;"></div>
+          <div>
+            <div class="mind-node-text">Graceful Exit</div>
+            <div class="mind-node-sub">Selalu ada rute keluar yang elegan</div>
+          </div>
+        </div>
+        <div class="mind-node">
+          <div class="mind-dot" style="background:#c8a951;"></div>
+          <div>
+            <div class="mind-node-text">Post-Action Review</div>
+            <div class="mind-node-sub">Belajar dari setiap aksi untuk yang berikutnya</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FRAMEWORK -->
+<section id="framework">
+  <div class="section-label reveal">03 — Framework</div>
+  <h2 class="section-title reveal">The Kaito Method<br><em style="color:var(--gold)">6 Fase Strategi</em></h2>
+  <p class="reveal" style="color:var(--muted); max-width:580px; line-height:1.8; font-size:1.05rem; margin-bottom:1rem;">
+    Framework yang bisa kamu adopsi untuk menghadapi tantangan kompleks dalam kehidupan — dari negosiasi hingga creative problem-solving.
+  </p>
+
+  <div class="framework-list">
+    <div class="framework-item reveal">
+      <div class="framework-step">I</div>
+      <div class="framework-content">
+        <h3>Intelligence — Kumpulkan Semua Informasi</h3>
+        <p>Sebelum bertindak, pahami medan sepenuhnya. Siapa pemainnya? Apa motivasi mereka? Apa yang mereka takuti? Apa yang mereka dambakan? Kaito tidak pernah masuk tanpa data lengkap.</p>
+      </div>
+    </div>
+    <div class="framework-item reveal">
+      <div class="framework-step">II</div>
+      <div class="framework-content">
+        <h3>Illusion Architecture — Bangun Narasi Palsu</h3>
+        <p>Tentukan apa yang ingin kamu sembunyikan, lalu ciptakan cerita alternatif yang lebih menarik perhatian. Ini bukan tentang kebohongan — ini tentang framing dan prioritisasi informasi.</p>
+      </div>
+    </div>
+    <div class="framework-item reveal">
+      <div class="framework-step">III</div>
+      <div class="framework-content">
+        <h3>Layered Planning — Rencana di Dalam Rencana</h3>
+        <p>Buat minimal 3 skenario: ideal, fallback, dan emergency. Untuk setiap titik kritis, siapkan respons yang sudah dipikirkan matang. Fleksibilitas lahir dari persiapan yang menyeluruh.</p>
+      </div>
+    </div>
+    <div class="framework-item reveal">
+      <div class="framework-step">IV</div>
+      <div class="framework-content">
+        <h3>Execution with Presence — Laksanakan dengan Tenang</h3>
+        <p>Kepanikan adalah musuh dari eksekusi yang baik. Kaito selalu terlihat santai bahkan di bawah tekanan ekstrem. Latih kemampuan untuk tetap "cool" dan berpikir jernih saat situasi kacau.</p>
+      </div>
+    </div>
+    <div class="framework-item reveal">
+      <div class="framework-step">V</div>
+      <div class="framework-content">
+        <h3>Adaptive Response — Improvisasi Berbasis Prinsip</h3>
+        <p>Ketika rencana berubah (dan selalu berubah), respons berdasarkan prinsip dasar, bukan panik. Kaito punya "rules" yang tidak pernah dilanggar — ini memberinya fondasi untuk improvisasi.</p>
+      </div>
+    </div>
+    <div class="framework-item reveal">
+      <div class="framework-step">VI</div>
+      <div class="framework-content">
+        <h3>Graceful Conclusion — Akhiri dengan Elegan</h3>
+        <p>Bagaimana kamu meninggalkan situasi sama pentingnya dengan bagaimana kamu memasukinya. Kaito selalu pergi dengan meninggalkan kesan, bukan kerusakan. Exit strategy adalah bagian dari strategi utama.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DUNIA NYATA -->
+<section id="dunia-nyata">
+  <div class="section-label reveal">04 — Aplikasi</div>
+  <h2 class="section-title reveal">Kaito Kid di<br><em style="color:var(--gold)">Dunia Nyata</em></h2>
+  <p class="reveal" style="color:var(--muted); max-width:580px; line-height:1.8; font-size:1.05rem;">
+    Strategi phantom thief ini memiliki analog langsung dalam berbagai bidang kehidupan profesional dan personal.
+  </p>
+
+  <div class="realworld-grid">
+    <div class="rw-card reveal">
+      <div class="rw-domain">BISNIS & NEGOSIASI</div>
+      <h3 class="rw-title">Strategic Anchoring</h3>
+      <p class="rw-desc">Gunakan misdirection untuk mengalihkan fokus dari konsesi penting dengan menawarkan sesuatu yang terlihat besar tapi biayanya kecil bagimu.</p>
+      <p class="rw-example">"Saya bisa setuju di poin X, tapi untuk Y saya butuh..."</p>
+    </div>
+
+    <div class="rw-card reveal">
+      <div class="rw-domain">LEADERSHIP</div>
+      <h3 class="rw-title">Manajemen Persepsi Tim</h3>
+      <p class="rw-desc">Pemimpin terbaik tahu kapan harus menunjukkan keyakinan penuh dan kapan menunjukkan kerentanan. Keduanya adalah tools strategis, bukan refleksi otomatis.</p>
+      <p class="rw-example">Tampilkan confidence saat tim butuh arah. Tampilkan keraguan saat butuh ide baru.</p>
+    </div>
+
+    <div class="rw-card reveal">
+      <div class="rw-domain">KREATIVITAS</div>
+      <h3 class="rw-title">Pattern Interruption</h3>
+      <p class="rw-desc">Seperti Kaito yang mengejutkan audiens dengan akhir yang tak terduga, kreator terbaik membangun ekspektasi lalu melanggarnya dengan cara yang memuaskan.</p>
+      <p class="rw-example">Setup → Tension → Unexpected Resolution = Memorable work.</p>
+    </div>
+
+    <div class="rw-card reveal">
+      <div class="rw-domain">PROBLEM SOLVING</div>
+      <h3 class="rw-title">Reframing Constraints</h3>
+      <p class="rw-desc">Kaito mengubah keterbatasan menjadi keunggulan. Gedung yang dikepung ketat? Justru itu yang membuat aksinya spektakuler. Constraint adalah bahan baku kreativitas.</p>
+      <p class="rw-example">Tanya: "Bagaimana batasan ini bisa jadi keuntungan?"</p>
+    </div>
+
+    <div class="rw-card reveal">
+      <div class="rw-domain">PERSONAL GROWTH</div>
+      <h3 class="rw-title">Deliberate Skill Stacking</h3>
+      <p class="rw-desc">Kaito menguasai sulap, akrobatik, mimikri, kimia, elektronik — semua kombinasi unique yang tak tertandingi. Bangun kombinasi skill yang tak ada duanya.</p>
+      <p class="rw-example">Coding + Design + Psikologi = Profile yang sangat langka.</p>
+    </div>
+
+    <div class="rw-card reveal">
+      <div class="rw-domain">KOMUNIKASI</div>
+      <h3 class="rw-title">Narrative Control</h3>
+      <p class="rw-desc">Siapa yang mengontrol narasi, mengontrol persepsi. Kaito selalu yang pertama mendefinisikan "apa yang terjadi" — bukan lawan. Dalam kehidupan, ini berarti komunikasi proaktif.</p>
+      <p class="rw-example">Sampaikan versimu sebelum asumsi orang lain terbentuk.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINALE -->
+<div class="finale">
+  <p style="font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:0.4em; color:var(--accent); margin-bottom:2rem;">THE MASTER PRINCIPLE</p>
+  <h2 class="finale-title">"The Real Magic<br>is Preparation"</h2>
+  <p class="finale-sub">
+    Di balik setiap aksi Kaito Kid yang tampak spontan, terdapat jam-jam persiapan yang tak terlihat. Keajaiban sejati bukan ilusi — melainkan kemampuan untuk membuat kerja keras tampak mudah.
+  </p>
+  <div class="finale-rules">
+    <span class="finale-rule">Observe Everything</span>
+    <span class="finale-rule">Prepare Obsessively</span>
+    <span class="finale-rule">Execute Calmly</span>
+    <span class="finale-rule">Leave No Trace</span>
+    <span class="finale-rule">Always Have an Exit</span>
+  </div>
+</div>
+
+<footer>
+  ♠ KAITO KID STRATEGY ANALYSIS · DIBUAT UNTUK PEMBELAJARAN · BUKAN AFILIASI RESMI ♠
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Hover on cards — cursor scale
+  document.querySelectorAll('.principle-card, .rw-card, .framework-item').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+      ring.style.transform = 'translate(-50%, -50%) scale(1.5)';
+    });
+    card.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+  });
+</script>
+</body>
+</html>
